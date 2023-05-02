@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import React, {useState} from 'react';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import BootomTabNavigator from './navigations/BootomTabNavigator';
 import PageNavigator from './navigations/PageNavigator';
 import initialState from './context/initialState';
 import GlobalContext from './context/GlobalContext';
-
 
 const Stack = createNativeStackNavigator();
 
@@ -13,10 +12,15 @@ function App() {
   const [todos, setTodos] = useState(initialState);
   const [element, setElement] = useState(initialState[0]);
 
-  const addTodo = text => {
+  const addTodo = (text, image) => {
     setTodos([
       ...todos,
-      { id: todos.length + 1, title: text, isComplete: false },
+      {
+        id: todos.length + 1,
+        title: text,
+        isComplete: false,
+        imgUrl: image,
+      },
     ]);
   };
 
@@ -52,13 +56,21 @@ function App() {
         setTodos,
       }}>
       <NavigationContainer>
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-          <Stack.Screen options={{
-            headerShown: false,
-          }} name="BootomTabNavigator" component={BootomTabNavigator} />
-          <Stack.Screen options={{
-            headerShown: false,
-          }} name="PageNavigator" component={PageNavigator} />
+        <Stack.Navigator screenOptions={{headerShown: false}}>
+          <Stack.Screen
+            options={{
+              headerShown: false,
+            }}
+            name="BootomTabNavigator"
+            component={BootomTabNavigator}
+          />
+          <Stack.Screen
+            options={{
+              headerShown: false,
+            }}
+            name="PageNavigator"
+            component={PageNavigator}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </GlobalContext.Provider>

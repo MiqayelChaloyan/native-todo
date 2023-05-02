@@ -35,6 +35,10 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: '#55BCF6',
   },
+  error: {
+    color: 'red',
+    textAlign: 'center',
+  },
   buttonsView: {
     width: '100%',
     flexDirection: 'row',

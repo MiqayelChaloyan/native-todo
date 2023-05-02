@@ -1,5 +1,5 @@
 import React, {useContext, useState} from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity, Image} from 'react-native';
 import GlobalContext from '../../context/GlobalContext';
 
 import PencilIcon from './Pencil.svg';
@@ -19,6 +19,8 @@ const Task = ({id, title, removeTodo, navigation, item}) => {
       setisRemoveTaskModalVisible(bool);
     }
   };
+
+  console.log(item);
 
   return (
     <>
@@ -95,6 +97,16 @@ const Task = ({id, title, removeTodo, navigation, item}) => {
           </Text>
         </View>
       </TouchableOpacity>
+      {item.imgUrl && (
+        <View style={{left: 10, marginBottom: 20}}>
+          <View style={{marginTop: 90}}>
+            <Image
+              source={{uri: item.imgUrl}}
+              style={{width: 300, height: 150, borderRadius: 7}}
+            />
+          </View>
+        </View>
+      )}
     </>
   );
 };

@@ -9,7 +9,7 @@ import ImageUpload from '../../../components/imageUpload/ImageUpload';
 
 const AddScreen = ({navigation, route}) => {
   const {addTodo} = useContext(GlobalContext);
-
+  const [image, setImageValue] = useState(null);
   const [text, setNewText] = useState('');
 
   useEffect(() => setNewText(''), [addTodo]);
@@ -39,7 +39,7 @@ const AddScreen = ({navigation, route}) => {
               </View>
             </View>
             <View>
-              <ImageUpload />
+              <ImageUpload setImageValue={setImageValue} />
             </View>
           </View>
           <View style={[styles.buttonsView, {top: text.length > 0 ? 60 : 60}]}>
@@ -47,7 +47,7 @@ const AddScreen = ({navigation, route}) => {
               <Text
                 style={styles.text}
                 onPress={() => {
-                  addTodo(text);
+                  addTodo(text, image);
                   return navigation.navigate('Home');
                 }}>
                 Add

@@ -4,7 +4,7 @@ import {launchImageLibrary, launchCamera} from 'react-native-image-picker';
 import styles from './style';
 // asyncStorage
 
-const ImageUpload = () => {
+const ImageUpload = ({setImageValue}) => {
   const [imageUrl, setImageUrl] = useState('');
 
   const selectFile = () => {
@@ -17,6 +17,7 @@ const ImageUpload = () => {
     launchImageLibrary(options, res => {
       const url = res?.assets && res.assets[0].uri;
       setImageUrl(url);
+      setImageValue(url);
     });
   };
 
