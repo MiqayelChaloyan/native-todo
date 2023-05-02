@@ -12,7 +12,10 @@ const AddScreen = ({navigation, route}) => {
   const [image, setImageValue] = useState(null);
   const [text, setNewText] = useState('');
 
-  useEffect(() => setNewText(''), [addTodo]);
+  useEffect(() => {
+    setNewText('');
+    setImageValue(null);
+  }, [addTodo]);
 
   const handleChange = newText => setNewText(newText);
 

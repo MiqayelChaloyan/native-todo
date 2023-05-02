@@ -50,6 +50,15 @@ const styles = StyleSheet.create({
     shadowColor: 'rgba(0, 0, 0, 1)',
     elevation: 7,
   },
+  removeImage: {
+    position: 'absolute',
+    borderRadius: 50,
+    zIndex: -1,
+    top: -9,
+    right: -29,
+    width: 40,
+    height: 40,
+  },
 });
 
 export default styles;

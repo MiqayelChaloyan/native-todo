@@ -1,11 +1,13 @@
 import {useState} from 'react';
 import {Image, Text, View, TouchableOpacity} from 'react-native';
 import {launchImageLibrary, launchCamera} from 'react-native-image-picker';
+import RemoveIcon from './Remove.svg';
+
 import styles from './style';
 // asyncStorage
 
 const ImageUpload = ({setImageValue}) => {
-  const [imageUrl, setImageUrl] = useState('');
+  const [imageUrl, setImageUrl] = useState(null);
 
   const selectFile = () => {
     const options = {
@@ -20,6 +22,8 @@ const ImageUpload = ({setImageValue}) => {
       setImageValue(url);
     });
   };
+
+  const removeImage = () => setImageUrl(null);
 
   return (
     <View style={{marginBottom: 40}}>
@@ -40,7 +44,12 @@ const ImageUpload = ({setImageValue}) => {
           </TouchableOpacity>
         </View>
       </View>
-      <View style={{marginTop: 90}}>
+      <View style={{marginTop: 110}}>
+        {imageUrl && (
+          <Text style={styles.removeImage} onPress={removeImage}>
+            <RemoveIcon width={30} height={30} fill="#55BCF6" zIndex={1} />
+          </Text>
+        )}
         <Image
           source={{uri: imageUrl}}
           style={{width: 280, height: 300, borderRadius: 7}}

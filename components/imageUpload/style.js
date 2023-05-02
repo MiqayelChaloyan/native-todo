@@ -20,6 +20,15 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: '#55BCF6',
   },
+  removeImage: {
+    position: 'absolute',
+    borderRadius: 50,
+    zIndex: 1,
+    top: -17,
+    right: -34,
+    width: 50,
+    height: 50,
+  },
 });
 
 export default styles;
