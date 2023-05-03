@@ -23,8 +23,6 @@ const Task = ({id, title, removeTodo, navigation, item}) => {
     }
   };
 
-  console.log(item);
-
   return (
     <View
       style={{

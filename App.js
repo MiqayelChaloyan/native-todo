@@ -9,6 +9,7 @@ import GlobalContext from './context/GlobalContext';
 const Stack = createNativeStackNavigator();
 
 function App() {
+  const [user, setUser] = useState(null);
   const [todos, setTodos] = useState(initialState);
   const [element, setElement] = useState(initialState[0]);
 
@@ -22,6 +23,13 @@ function App() {
         imgUrl: image,
       },
     ]);
+  };
+
+  const createUser = data => {
+    setUser({
+      id: Math.floor(Math.random() * 10),
+      ...data,
+    });
   };
 
   const removeTodo = id => {
@@ -54,6 +62,8 @@ function App() {
         element,
         setElement,
         setTodos,
+        createUser,
+        user,
       }}>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{headerShown: false}}>

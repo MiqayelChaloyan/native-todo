@@ -1,10 +1,11 @@
-import { createContext } from 'react';
+import {createContext} from 'react';
 
 const GlobalContext = createContext({
-    item: {},
-    state: [],
-    addTodo: () => { },
-    removeTodo: () => { },
+  item: {},
+  state: [],
+  user: {},
+  addTodo: () => {},
+  removeTodo: () => {},
 });
 
 export default GlobalContext;
