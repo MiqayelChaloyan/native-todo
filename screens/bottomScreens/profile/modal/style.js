@@ -26,10 +26,12 @@ const styles = StyleSheet.create({
     top: 25,
   },
   input: {
+    borderBottomWidth: 2,
+    borderColor: '#4F4F51',
     width: 370,
     height: 50,
     margin: 5,
-    borderWidth: 1,
+    // borderWidth: 1,
     padding: 10,
   },
   imageContainer: {
@@ -43,9 +45,6 @@ const styles = StyleSheet.create({
     bottom: 20,
   },
   icon: {
-    borderWidth: 2,
-    width: 54,
-    height: 54,
     position: 'absolute',
     backgroundColor: '#F4F4F4',
     bottom: 2,
@@ -62,12 +61,6 @@ const styles = StyleSheet.create({
     color: '#C93131',
     opacity: 0.8,
   },
-  iconText: {
-    position: 'absolute',
-    fontSize: 50,
-    bottom: -10,
-    right: 9,
-  },
   formContainer: {
     flex: 1,
     flexDirection: 'column',
@@ -81,7 +74,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flex: 1,
-    marginTop: 5,
+    marginTop: 15,
     flexDirection: 'row',
     justifyContent: 'center',
   },

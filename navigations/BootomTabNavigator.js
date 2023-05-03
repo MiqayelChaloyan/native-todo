@@ -5,14 +5,20 @@ import AddScreen from '../screens/pageScreens/add/AddScreen';
 import PlusIcon from './icons/Plus.svg';
 import HomeIcon from './icons/Home.svg';
 import ProfileIcon from './icons/Profile.svg';
-import {StyleSheet, Text, View} from 'react-native';
+
+import {StyleSheet, View} from 'react-native';
 
 const Tab = createBottomTabNavigator();
 
 const BootomTabNavigator = () => {
   return (
     <Tab.Navigator
-      screenOptions={{headerShown: false}}
+      screenOptions={{
+        headerShown: false,
+        tabBarItemStyle: {
+          paddingTop: 8,
+        },
+      }}
       tabBarOptions={{
         activeTintColor: '#55BCF6',
         inactiveTintColor: 'gray',
@@ -22,11 +28,11 @@ const BootomTabNavigator = () => {
         component={DrawerNavigator}
         options={{
           headerShown: false,
-          title: 'Home',
+          title: '',
           tabBarIcon: ({tabInfo, focused}) => (
             <HomeIcon
-              width={25}
-              height={25}
+              width={28}
+              height={28}
               fill={focused ? '#55BCF6' : 'gray'}
             />
           ),
@@ -55,11 +61,11 @@ const BootomTabNavigator = () => {
         component={Profile}
         options={{
           headerShown: false,
-          title: 'Profile',
+          title: '',
           tabBarIcon: ({tabInfo, focused}) => (
             <ProfileIcon
-              width={25}
-              height={25}
+              width={28}
+              height={28}
               fill={focused ? '#55BCF6' : 'gray'}
             />
           ),
@@ -73,7 +79,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
     borderRadius: 50,
-    bottom: 15,
+    bottom: 20,
     shadowColor: 'rgba(0, 0, 0, 1)',
     elevation: 7,
     width: 70,

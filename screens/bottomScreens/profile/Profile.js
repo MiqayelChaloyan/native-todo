@@ -1,14 +1,31 @@
 import {useContext, useState} from 'react';
-import {View, Text, TouchableOpacity, Image} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  Linking,
+  SafeAreaView,
+  ScrollView,
+  StatusBar,
+} from 'react-native';
 import ModalProfile from './modal/ModalProfile';
 
 import GroupIcon from './icons/Group.svg';
 import FriendIcon from './icons/Friend.svg';
+import SettingIcon from './icons/Setting.svg';
+import ShareIcon from './icons/Share.svg';
+import AboutUsIcon from './icons/AboutUs.svg';
+import SupportIcon from './icons/Support.svg';
+import PhoneIcon from './icons/Phone.svg';
+
 import GlobalContext from '../../../context/GlobalContext';
+
+const supportedURL = 'https://ru-ru.facebook.com';
 
 const Profile = () => {
   const [isVisible, setisVisible] = useState(false);
-  const {user} = useContext(GlobalContext);
+  const {user, userImageUrl} = useContext(GlobalContext);
 
   const closeRemoveModal = (bool, type) => {
     if (type === 'Yes') {
@@ -18,254 +35,344 @@ const Profile = () => {
     }
   };
 
-  console.log(user);
+  const handlePress = () => {
+    const supported = Linking.canOpenURL(supportedURL);
+
+    if (supported) {
+      Linking.openURL(supportedURL);
+    } else {
+      Alert.alert(`Don't know how to open this URL: ${supportedURL}`);
+    }
+  };
+
   return (
-    <>
-      <ModalProfile isVisible={isVisible} closeRemoveModal={closeRemoveModal} />
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-        <View style={{top: 15}}>
-          <View
-            style={{
-              left: 80,
-              borderWidth: 1,
-              width: 205,
-              height: 204,
-              borderRadius: 100,
-              marginBottom: 10,
-              bottom: 15,
-            }}>
-            <Image
-              source={require('../../../assects/images/profile.jpg')}
+    <SafeAreaView style={{flex: 1, paddingTop: StatusBar.currentHeight}}>
+      <ScrollView
+        style={{
+          marginHorizontal: 20,
+          marginBottom: 20,
+        }}>
+        <ModalProfile
+          isVisible={isVisible}
+          closeRemoveModal={closeRemoveModal}
+        />
+        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+          <View style={{top: 15}}>
+            <View
               style={{
-                width: 202,
-                height: 202,
+                left: 80,
+                borderWidth: 1,
+                width: 205,
+                height: 204,
                 borderRadius: 100,
-              }}
-            />
-          </View>
-          <Text
-            style={{
-              textAlign: 'center',
-              marginBottom: 10,
-              color: 'black',
-              fontWeight: 'bold',
-              fontSize: 25,
-            }}>
-            {user ? user.name : 'Alex Marshall'}
-          </Text>
-          <Text style={{textAlign: 'center', marginBottom: 20}}>
-            {user ? user.userName : '@alex_marshall'}
-          </Text>
-          <TouchableOpacity
-            onPress={() => setisVisible(true)}
-            style={{
-              backgroundColor: '#263775',
-              width: 370,
-              height: 48,
-              borderRadius: 8,
-              marginBottom: 5,
-            }}>
+                marginBottom: 10,
+                bottom: 5,
+              }}>
+              {userImageUrl ? (
+                <Image
+                  source={{uri: userImageUrl}}
+                  style={{
+                    width: 202,
+                    height: 202,
+                    borderRadius: 100,
+                  }}
+                />
+              ) : (
+                <Image
+                  source={require('../../../assects/images/profile.jpg')}
+                  style={{
+                    width: 202,
+                    height: 202,
+                    borderRadius: 100,
+                  }}
+                />
+              )}
+            </View>
             <Text
               style={{
                 textAlign: 'center',
-                padding: 5,
-                fontSize: 24,
-                color: '#fff',
+                marginBottom: 10,
+                color: 'black',
+                fontWeight: 'bold',
+                fontSize: 25,
               }}>
-              Edit
+              {user ? user.name : ''}
             </Text>
-          </TouchableOpacity>
-          <View>
-            <View style={{flexDirection: 'row'}}>
-              <View
-                style={{flexDirection: 'row', alignItems: 'center', margin: 4}}>
+            <Text style={{textAlign: 'center', marginBottom: 20}}>
+              {user ? user.userName : ''}
+            </Text>
+            {user && (
+              <TouchableOpacity
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'stretch',
+                  justifyContent: 'center',
+                }}
+                onPress={() => {
+                  Linking.openURL(`tel:${user.phoneNumber}`);
+                }}>
                 <Text
                   style={{
                     textAlign: 'center',
-                    padding: 5,
+                    padding: 7,
                     fontSize: 15,
                     color: 'black',
                   }}>
-                  <FriendIcon width={20} height={20} fill="black" />
+                  <PhoneIcon width={20} height={20} fill="black" />
                 </Text>
-                <TouchableOpacity
-                  style={{
-                    // backgroundColor: '#263775',
-                    width: 325,
-                    height: 40,
-                    borderRadius: 8,
-                  }}>
-                  <Text
-                    style={{
-                      textAlign: 'left',
-                      padding: 5,
-                      fontSize: 17,
-                      color: 'black',
-                      left: 15,
-                    }}>
-                    Setting
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-            <View style={{flexDirection: 'row'}}>
-              <View
-                style={{flexDirection: 'row', alignItems: 'center', margin: 4}}>
-                <Text
-                  style={{
-                    padding: 5,
-                  }}>
-                  <FriendIcon width={20} height={20} fill="black" />
-                </Text>
-                <TouchableOpacity
-                  style={{
-                    // backgroundColor: '#263775',
-                    width: 325,
-                    height: 40,
-                    borderRadius: 8,
-                  }}>
-                  <Text
-                    style={{
-                      textAlign: 'left',
-                      padding: 5,
-                      fontSize: 17,
-                      color: 'black',
-                      left: 15,
-                    }}>
-                    Friend
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-            <View style={{flexDirection: 'row'}}>
-              <View
-                style={{flexDirection: 'row', alignItems: 'center', margin: 4}}>
-                <Text
-                  style={{
-                    padding: 5,
-                  }}>
-                  <GroupIcon width={20} height={20} fill="black" />
-                </Text>
-                <TouchableOpacity
-                  style={{
-                    // backgroundColor: '#263775',
-                    width: 325,
-                    height: 40,
-                    borderRadius: 8,
-                  }}>
-                  <Text
-                    style={{
-                      textAlign: 'left',
-                      padding: 5,
-                      fontSize: 17,
-                      color: 'black',
-                      left: 15,
-                    }}>
-                    New Group
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-            <View style={{flexDirection: 'row'}}>
-              <View
-                style={{flexDirection: 'row', alignItems: 'center', margin: 4}}>
                 <Text
                   style={{
                     textAlign: 'center',
-                    padding: 5,
-                    fontSize: 15,
+                    marginBottom: 10,
                     color: 'black',
+                    fontWeight: 300,
+                    fontSize: 20,
                   }}>
-                  <FriendIcon width={20} height={20} fill="black" />
+                  {user.phoneNumber}
                 </Text>
-                <TouchableOpacity
+              </TouchableOpacity>
+            )}
+            <TouchableOpacity
+              onPress={() => setisVisible(true)}
+              style={{
+                backgroundColor: '#263775',
+                width: 370,
+                height: 48,
+                borderRadius: 8,
+                marginBottom: 5,
+              }}>
+              <Text
+                style={{
+                  textAlign: 'center',
+                  padding: 5,
+                  fontSize: 24,
+                  color: '#fff',
+                }}>
+                Edit
+              </Text>
+            </TouchableOpacity>
+            <View>
+              <View style={{flexDirection: 'row'}}>
+                <View
                   style={{
-                    // backgroundColor: '#263775',
-                    width: 325,
-                    height: 40,
-                    borderRadius: 8,
+                    flexDirection: 'row',
+                    alignItems: 'stretch',
+                    margin: 4,
                   }}>
                   <Text
                     style={{
-                      textAlign: 'left',
-                      padding: 5,
-                      fontSize: 17,
+                      textAlign: 'center',
+                      padding: 7,
+                      fontSize: 15,
                       color: 'black',
-                      left: 15,
                     }}>
-                    Support
+                    <SettingIcon width={20} height={20} fill="black" />
                   </Text>
-                </TouchableOpacity>
+                  <TouchableOpacity
+                    style={{
+                      width: 325,
+                      height: 40,
+                      borderRadius: 8,
+                    }}>
+                    <Text
+                      style={{
+                        textAlign: 'left',
+                        padding: 5,
+                        fontSize: 17,
+                        color: 'black',
+                        left: 15,
+                      }}>
+                      Setting
+                    </Text>
+                  </TouchableOpacity>
+                </View>
               </View>
-            </View>
-            <View style={{flexDirection: 'row'}}>
-              <View
-                style={{flexDirection: 'row', alignItems: 'center', margin: 4}}>
-                <Text
+              <View style={{flexDirection: 'row'}}>
+                <View
                   style={{
-                    textAlign: 'center',
-                    padding: 5,
-                    fontSize: 15,
-                    color: 'black',
-                  }}>
-                  <FriendIcon width={20} height={20} fill="black" />
-                </Text>
-                <TouchableOpacity
-                  style={{
-                    // backgroundColor: '#263775',
-                    width: 325,
-                    height: 40,
-                    borderRadius: 8,
+                    flexDirection: 'row',
+                    alignItems: 'stretch',
+                    margin: 4,
                   }}>
                   <Text
                     style={{
-                      textAlign: 'left',
-                      padding: 5,
-                      fontSize: 17,
+                      textAlign: 'center',
+                      padding: 7,
+                      fontSize: 15,
                       color: 'black',
-                      left: 15,
                     }}>
-                    Share
+                    <FriendIcon width={20} height={20} fill="black" />
                   </Text>
-                </TouchableOpacity>
+                  <TouchableOpacity
+                    style={{
+                      // backgroundColor: '#263775',
+                      width: 325,
+                      height: 40,
+                      borderRadius: 8,
+                    }}>
+                    <Text
+                      style={{
+                        textAlign: 'left',
+                        padding: 5,
+                        fontSize: 17,
+                        color: 'black',
+                        left: 15,
+                      }}>
+                      Friend
+                    </Text>
+                  </TouchableOpacity>
+                </View>
               </View>
-            </View>
-            <View style={{flexDirection: 'row'}}>
-              <View
-                style={{flexDirection: 'row', alignItems: 'center', margin: 4}}>
-                <Text
+              <View style={{flexDirection: 'row'}}>
+                <View
                   style={{
-                    textAlign: 'center',
-                    padding: 5,
-                    fontSize: 15,
-                    color: 'black',
-                  }}>
-                  <FriendIcon width={20} height={20} fill="black" />
-                </Text>
-                <TouchableOpacity
-                  style={{
-                    // backgroundColor: '#263775',
-                    width: 325,
-                    height: 40,
-                    borderRadius: 8,
+                    flexDirection: 'row',
+                    alignItems: 'stretch',
+                    margin: 4,
                   }}>
                   <Text
                     style={{
-                      textAlign: 'left',
-                      padding: 5,
-                      fontSize: 17,
+                      textAlign: 'center',
+                      padding: 7,
+                      fontSize: 15,
                       color: 'black',
-                      left: 15,
                     }}>
-                    Abot us
+                    <GroupIcon width={20} height={20} fill="black" />
                   </Text>
-                </TouchableOpacity>
+                  <TouchableOpacity
+                    style={{
+                      // backgroundColor: '#263775',
+                      width: 325,
+                      height: 40,
+                      borderRadius: 8,
+                    }}>
+                    <Text
+                      style={{
+                        textAlign: 'left',
+                        padding: 5,
+                        fontSize: 17,
+                        color: 'black',
+                        left: 15,
+                      }}>
+                      New Group
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+              <View style={{flexDirection: 'row'}}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'stretch',
+                    margin: 4,
+                  }}>
+                  <Text
+                    style={{
+                      textAlign: 'center',
+                      padding: 7,
+                      fontSize: 15,
+                      color: 'black',
+                    }}>
+                    <SupportIcon width={20} height={20} fill="black" />
+                  </Text>
+                  <TouchableOpacity
+                    style={{
+                      // backgroundColor: '#263775',
+                      width: 325,
+                      height: 40,
+                      borderRadius: 8,
+                    }}
+                    onPress={handlePress}>
+                    <Text
+                      style={{
+                        textAlign: 'left',
+                        padding: 5,
+                        fontSize: 17,
+                        color: 'black',
+                        left: 15,
+                      }}>
+                      Support
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+              <View style={{flexDirection: 'row'}}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'stretch',
+                    margin: 4,
+                  }}>
+                  <Text
+                    style={{
+                      textAlign: 'center',
+                      padding: 7,
+                      fontSize: 15,
+                      color: 'black',
+                    }}>
+                    <ShareIcon width={20} height={20} fill="black" />
+                  </Text>
+                  <TouchableOpacity
+                    style={{
+                      // backgroundColor: '#263775',
+                      width: 325,
+                      height: 40,
+                      borderRadius: 8,
+                    }}>
+                    <Text
+                      style={{
+                        textAlign: 'left',
+                        padding: 5,
+                        fontSize: 17,
+                        color: 'black',
+                        left: 15,
+                      }}>
+                      Share
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+              <View style={{flexDirection: 'row'}}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'stretch',
+                    margin: 4,
+                  }}>
+                  <Text
+                    style={{
+                      textAlign: 'center',
+                      padding: 7,
+                      fontSize: 15,
+                      color: 'black',
+                    }}>
+                    <AboutUsIcon width={20} height={20} fill="black" />
+                  </Text>
+                  <TouchableOpacity
+                    style={{
+                      // backgroundColor: '#263775',
+                      width: 325,
+                      height: 40,
+                      borderRadius: 8,
+                    }}>
+                    <Text
+                      style={{
+                        textAlign: 'left',
+                        padding: 5,
+                        fontSize: 17,
+                        color: 'black',
+                        left: 15,
+                      }}>
+                      Abot us
+                    </Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
           </View>
         </View>
-      </View>
-    </>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 

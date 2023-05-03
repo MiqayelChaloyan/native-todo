@@ -1,14 +1,18 @@
 import {useContext, useState} from 'react';
 import {View, Text, TouchableOpacity, TextInput, Image} from 'react-native';
 import Modal from 'react-native-modal';
+import {launchImageLibrary} from 'react-native-image-picker';
+import GlobalContext from '../../../../context/GlobalContext';
+
 // form and validation
 import {Formik, useFormik} from 'formik';
 import validationSchema from './validate/schema';
+// icon
+import AddImageIcon from '../icons/AddImage.svg';
 import styles from './style';
-import GlobalContext from '../../../../context/GlobalContext';
 
 const ModalProfile = ({isVisible, closeRemoveModal}) => {
-  const {createUser} = useContext(GlobalContext);
+  const {createUser, setImageUrl, userImageUrl} = useContext(GlobalContext);
 
   const [state, setState] = useState(null);
   const {
@@ -41,6 +45,19 @@ const ModalProfile = ({isVisible, closeRemoveModal}) => {
     }
   };
 
+  const selectFile = () => {
+    const options = {
+      saveToPhotos: true,
+      mediaType: 'photo',
+      includeBase64: false,
+    };
+
+    launchImageLibrary(options, res => {
+      const url = res?.assets && res.assets[0].uri;
+      setImageUrl(url);
+    });
+  };
+
   return (
     <Modal
       isVisible={isVisible}
@@ -53,32 +70,45 @@ const ModalProfile = ({isVisible, closeRemoveModal}) => {
       swipeDirection={['down', 'up', 'right', 'left']}
       onSwipeComplete={() => closeModal(false, 'Cancel')}
       hideModal={() => closeModal(false, 'Cancel')}>
-      <View style={styles.container}>
-        <View style={styles.modal}>
-          <View style={styles.textView}>
-            <TouchableOpacity
-              style={styles.touchableOpacityCancel}
-              onPress={() => closeModal(false, 'Cancel')}>
-              <Text style={styles.textCancel}>Cancel</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.imageContainer}>
-            <Image
-              source={require('../../../../assects/images/profile.jpg')}
-              style={{
-                width: 202,
-                height: 202,
-                borderRadius: 100,
-                position: 'absolute',
-                right: 0,
-                bottom: -1,
-              }}
-            />
-            <View style={styles.icon}>
-              <Text style={styles.iconText}>{'+'}</Text>
+      <Formik>
+        <View style={styles.container}>
+          <View style={styles.modal}>
+            <View style={styles.textView}>
+              <TouchableOpacity
+                style={styles.touchableOpacityCancel}
+                onPress={() => closeModal(false, 'Cancel')}>
+                <Text style={styles.textCancel}>Cancel</Text>
+              </TouchableOpacity>
             </View>
-          </View>
-          <Formik>
+            <View style={styles.imageContainer}>
+              {userImageUrl ? (
+                <Image
+                  source={{uri: userImageUrl}}
+                  style={{
+                    width: 202,
+                    height: 202,
+                    borderRadius: 100,
+                  }}
+                />
+              ) : (
+                <Image
+                  source={require('../../../../assects/images/profile.jpg')}
+                  style={{
+                    width: 202,
+                    height: 202,
+                    borderRadius: 100,
+                    position: 'absolute',
+                    right: 0,
+                    bottom: -1,
+                  }}
+                />
+              )}
+              <View style={styles.icon}>
+                <Text style={styles.iconText} onPress={selectFile}>
+                  <AddImageIcon width={50} height={50} />
+                </Text>
+              </View>
+            </View>
             <View style={styles.formContainer}>
               <TextInput
                 style={styles.input}
@@ -97,7 +127,7 @@ const ModalProfile = ({isVisible, closeRemoveModal}) => {
                 value={values.userName}
                 variant="standard"
                 onChangeText={handleChange('userName')}
-                placeholder="user name"
+                placeholder="Username"
                 onBlur={() => setFieldTouched('userName')}
                 secureTextEntry={false}
               />
@@ -109,7 +139,7 @@ const ModalProfile = ({isVisible, closeRemoveModal}) => {
                 value={values.phoneNumber}
                 variant="standard"
                 onChangeText={handleChange('phoneNumber')}
-                placeholder="phone number"
+                placeholder="Phone number"
                 onBlur={() => setFieldTouched('phoneNumber')}
                 secureTextEntry={false}
               />
@@ -121,7 +151,7 @@ const ModalProfile = ({isVisible, closeRemoveModal}) => {
                 value={values.email}
                 variant="standard"
                 onChangeText={handleChange('email')}
-                placeholder="email"
+                placeholder="Email"
                 onBlur={() => setFieldTouched('email')}
                 secureTextEntry={false}
               />
@@ -129,19 +159,19 @@ const ModalProfile = ({isVisible, closeRemoveModal}) => {
                 <Text style={styles.inputError}>{errors.email}</Text>
               )}
             </View>
-          </Formik>
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity
-              style={styles.touchableOpacitySave}
-              disabled={!isValid}
-              onPress={() => {
-                handleSave(), handleSubmit();
-              }}>
-              <Text style={styles.saveBtnText}>Save</Text>
-            </TouchableOpacity>
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity
+                style={styles.touchableOpacitySave}
+                disabled={!isValid}
+                onPress={() => {
+                  handleSubmit(), handleSave();
+                }}>
+                <Text style={styles.saveBtnText}>Save</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
-      </View>
+      </Formik>
     </Modal>
   );
 };

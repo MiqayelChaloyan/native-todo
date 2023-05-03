@@ -1,11 +1,9 @@
 import React, {useContext, useState} from 'react';
 import {View, Text, TouchableOpacity, Image} from 'react-native';
 import GlobalContext from '../../context/GlobalContext';
-
 import PencilIcon from './icons/Pencil.svg';
 import RemoveIcon from './icons/Remove.svg';
 import CheckIcon from './icons/Check.svg';
-
 import RemoveTask from '../modal/RemoveTask';
 import styles from './style';
 

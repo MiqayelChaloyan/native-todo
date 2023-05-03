@@ -9,6 +9,7 @@ import GlobalContext from './context/GlobalContext';
 const Stack = createNativeStackNavigator();
 
 function App() {
+  const [userImageUrl, setImageUrl] = useState(null);
   const [user, setUser] = useState(null);
   const [todos, setTodos] = useState(initialState);
   const [element, setElement] = useState(initialState[0]);
@@ -64,6 +65,8 @@ function App() {
         setTodos,
         createUser,
         user,
+        userImageUrl,
+        setImageUrl,
       }}>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{headerShown: false}}>
