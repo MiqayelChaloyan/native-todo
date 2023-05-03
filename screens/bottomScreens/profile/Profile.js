@@ -241,7 +241,6 @@ const Profile = () => {
                   </Text>
                   <TouchableOpacity
                     style={{
-                      // backgroundColor: '#263775',
                       width: 325,
                       height: 40,
                       borderRadius: 8,
@@ -277,7 +276,6 @@ const Profile = () => {
                   </Text>
                   <TouchableOpacity
                     style={{
-                      // backgroundColor: '#263775',
                       width: 325,
                       height: 40,
                       borderRadius: 8,
@@ -314,7 +312,6 @@ const Profile = () => {
                   </Text>
                   <TouchableOpacity
                     style={{
-                      // backgroundColor: '#263775',
                       width: 325,
                       height: 40,
                       borderRadius: 8,
@@ -350,7 +347,6 @@ const Profile = () => {
                   </Text>
                   <TouchableOpacity
                     style={{
-                      // backgroundColor: '#263775',
                       width: 325,
                       height: 40,
                       borderRadius: 8,
