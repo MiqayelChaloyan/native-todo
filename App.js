@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import React, { useState } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import BootomTabNavigator from './navigations/BootomTabNavigator';
 import PageNavigator from './navigations/PageNavigator';
 import initialState from './context/initialState';
@@ -13,6 +13,8 @@ function App() {
   const [user, setUser] = useState(null);
   const [todos, setTodos] = useState(initialState);
   const [element, setElement] = useState(initialState[0]);
+  const [country, setCountry] = useState('')
+
 
   const addTodo = (text, image) => {
     setTodos([
@@ -26,9 +28,10 @@ function App() {
     ]);
   };
 
-  const createUser = data => {
+  const createUser = (data) => {
     setUser({
       id: Math.floor(Math.random() * 10),
+      country,
       ...data,
     });
   };
@@ -67,9 +70,10 @@ function App() {
         user,
         userImageUrl,
         setImageUrl,
+        setCountry
       }}>
       <NavigationContainer>
-        <Stack.Navigator screenOptions={{headerShown: false}}>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen
             options={{
               headerShown: false,

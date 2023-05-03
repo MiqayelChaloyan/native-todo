@@ -1,4 +1,4 @@
-import {useContext, useState} from 'react';
+import { useContext, useState } from 'react';
 import {
   View,
   Text,
@@ -20,12 +20,15 @@ import SupportIcon from './icons/Support.svg';
 import PhoneIcon from './icons/Phone.svg';
 
 import GlobalContext from '../../../context/GlobalContext';
+import ModalDropdown from './modal/ModalDropdown';
 
 const supportedURL = 'https://ru-ru.facebook.com';
 
 const Profile = () => {
   const [isVisible, setisVisible] = useState(false);
-  const {user, userImageUrl} = useContext(GlobalContext);
+  const [isVisibleDropdown, setisVisibleDropdown] = useState(false);
+
+  const { user, userImageUrl } = useContext(GlobalContext);
 
   const closeRemoveModal = (bool, type) => {
     if (type === 'Yes') {
@@ -34,6 +37,12 @@ const Profile = () => {
       setisVisible(bool);
     }
   };
+
+
+  const closeRemoveModalDropdown = (bool, type) => {
+    setisVisibleDropdown(bool)
+  }
+
 
   const handlePress = () => {
     const supported = Linking.canOpenURL(supportedURL);
@@ -45,8 +54,9 @@ const Profile = () => {
     }
   };
 
+
   return (
-    <SafeAreaView style={{flex: 1, paddingTop: StatusBar.currentHeight}}>
+    <SafeAreaView style={{ flex: 1, paddingTop: StatusBar.currentHeight }}>
       <ScrollView
         style={{
           marginHorizontal: 20,
@@ -56,8 +66,12 @@ const Profile = () => {
           isVisible={isVisible}
           closeRemoveModal={closeRemoveModal}
         />
-        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-          <View style={{top: 15}}>
+        <ModalDropdown
+          isVisible={isVisibleDropdown}
+          closeRemoveModalDropdown={closeRemoveModalDropdown}
+        />
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+          <View style={{ top: 15 }}>
             <View
               style={{
                 left: 80,
@@ -65,12 +79,12 @@ const Profile = () => {
                 width: 205,
                 height: 204,
                 borderRadius: 100,
-                marginBottom: 10,
+                marginBottom: user ? 10 : 140,
                 bottom: 5,
               }}>
               {userImageUrl ? (
                 <Image
-                  source={{uri: userImageUrl}}
+                  source={{ uri: userImageUrl }}
                   style={{
                     width: 202,
                     height: 202,
@@ -88,50 +102,54 @@ const Profile = () => {
                 />
               )}
             </View>
-            <Text
-              style={{
-                textAlign: 'center',
-                marginBottom: 10,
-                color: 'black',
-                fontWeight: 'bold',
-                fontSize: 25,
-              }}>
-              {user ? user.name : ''}
-            </Text>
-            <Text style={{textAlign: 'center', marginBottom: 20}}>
-              {user ? user.userName : ''}
-            </Text>
-            {user && (
-              <TouchableOpacity
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'stretch',
-                  justifyContent: 'center',
-                }}
-                onPress={() => {
-                  Linking.openURL(`tel:${user.phoneNumber}`);
-                }}>
-                <Text
-                  style={{
-                    textAlign: 'center',
-                    padding: 7,
-                    fontSize: 15,
-                    color: 'black',
-                  }}>
-                  <PhoneIcon width={20} height={20} fill="black" />
-                </Text>
+            {user &&
+              <>
                 <Text
                   style={{
                     textAlign: 'center',
                     marginBottom: 10,
                     color: 'black',
-                    fontWeight: 300,
-                    fontSize: 20,
+                    fontWeight: 'bold',
+                    fontSize: 25,
                   }}>
-                  {user.phoneNumber}
+                  {user.name && user.name}
                 </Text>
-              </TouchableOpacity>
-            )}
+                <Text style={{ textAlign: 'center', marginBottom: 20 }}>
+                  {user.userName}
+                </Text>
+                <Text style={{ textAlign: 'center' }}>{user.country && user.country}</Text>
+                <TouchableOpacity
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'stretch',
+                    justifyContent: 'center',
+                  }}
+                  onPress={() => {
+                    Linking.openURL(`tel:${user.phoneNumber}`);
+                  }}>
+                  {
+                    user.phoneNumber && (<Text
+                      style={{
+                        textAlign: 'center',
+                        padding: 7,
+                        fontSize: 15,
+                        color: 'black',
+                      }}>
+                      <PhoneIcon width={20} height={20} fill="black" />
+                    </Text>)
+                  }
+                  <Text
+                    style={{
+                      textAlign: 'center',
+                      marginBottom: 10,
+                      color: 'black',
+                      fontWeight: 300,
+                      fontSize: 20,
+                    }}>
+                    {user.phoneNumber && user.phoneNumber}
+                  </Text>
+                </TouchableOpacity>
+              </>}
             <TouchableOpacity
               onPress={() => setisVisible(true)}
               style={{
@@ -152,7 +170,7 @@ const Profile = () => {
               </Text>
             </TouchableOpacity>
             <View>
-              <View style={{flexDirection: 'row'}}>
+              <View style={{ flexDirection: 'row' }}>
                 <View
                   style={{
                     flexDirection: 'row',
@@ -173,7 +191,9 @@ const Profile = () => {
                       width: 325,
                       height: 40,
                       borderRadius: 8,
-                    }}>
+                    }}
+                    onPress={() => setisVisibleDropdown(true)}
+                  >
                     <Text
                       style={{
                         textAlign: 'left',
@@ -187,7 +207,7 @@ const Profile = () => {
                   </TouchableOpacity>
                 </View>
               </View>
-              <View style={{flexDirection: 'row'}}>
+              <View style={{ flexDirection: 'row' }}>
                 <View
                   style={{
                     flexDirection: 'row',
@@ -223,7 +243,7 @@ const Profile = () => {
                   </TouchableOpacity>
                 </View>
               </View>
-              <View style={{flexDirection: 'row'}}>
+              <View style={{ flexDirection: 'row' }}>
                 <View
                   style={{
                     flexDirection: 'row',
@@ -258,7 +278,7 @@ const Profile = () => {
                   </TouchableOpacity>
                 </View>
               </View>
-              <View style={{flexDirection: 'row'}}>
+              <View style={{ flexDirection: 'row' }}>
                 <View
                   style={{
                     flexDirection: 'row',
@@ -294,7 +314,7 @@ const Profile = () => {
                   </TouchableOpacity>
                 </View>
               </View>
-              <View style={{flexDirection: 'row'}}>
+              <View style={{ flexDirection: 'row' }}>
                 <View
                   style={{
                     flexDirection: 'row',
@@ -329,7 +349,7 @@ const Profile = () => {
                   </TouchableOpacity>
                 </View>
               </View>
-              <View style={{flexDirection: 'row'}}>
+              <View style={{ flexDirection: 'row' }}>
                 <View
                   style={{
                     flexDirection: 'row',
