@@ -21,9 +21,9 @@ import PhoneIcon from './icons/Phone.svg';
 
 import GlobalContext from '../../../context/GlobalContext';
 import ModalDropdown from './modal/ModalDropdown';
-import ShareScreen from '../../drawerScreens/share/Share';
+import ShareScreen from './share/Share';
 
-const supportedURL = 'https://ru-ru.facebook.com';
+const supportedURL = 'https://facebook.com';
 
 const Profile = () => {
   const [isVisible, setisVisible] = useState(false);
@@ -77,7 +77,7 @@ const Profile = () => {
                 width: 205,
                 height: 204,
                 borderRadius: 100,
-                marginBottom: user ? 10 : 140,
+                marginBottom: user ? 10 : 100,
                 bottom: 5,
               }}>
               {userImageUrl ? (

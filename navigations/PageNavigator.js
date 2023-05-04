@@ -21,7 +21,6 @@ const PageNavigator = () => {
         component={HomeScreen}
       />
       <Stack.Screen name="EditScreen" component={EditScreen} />
-      <Text>lllllllllll</Text>
       <Stack.Screen
         options={{
           headerShown: false,

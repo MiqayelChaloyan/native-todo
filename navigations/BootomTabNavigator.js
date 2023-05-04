@@ -5,15 +5,32 @@ import AddScreen from '../screens/pageScreens/add/AddScreen';
 import PlusIcon from './icons/Plus.svg';
 import HomeIcon from './icons/Home.svg';
 import ProfileIcon from './icons/Profile.svg';
-
-import {StyleSheet, View} from 'react-native';
+import {Keyboard, StyleSheet, View} from 'react-native';
+import {useEffect, useState} from 'react';
 
 const Tab = createBottomTabNavigator();
 
 const BootomTabNavigator = () => {
+  const [keyboardStatus, setKeyboardStatus] = useState(false);
+
+  useEffect(() => {
+    const showSubscription = Keyboard.addListener('keyboardDidShow', () => {
+      setKeyboardStatus(true);
+    });
+    const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
+      setKeyboardStatus(false);
+    });
+
+    return () => {
+      showSubscription.remove();
+      hideSubscription.remove();
+    };
+  }, []);
+
   return (
     <Tab.Navigator
       screenOptions={{
+        tabBarHideOnKeyboard: true,
         headerShown: false,
         tabBarItemStyle: {
           paddingTop: 8,
@@ -45,7 +62,11 @@ const BootomTabNavigator = () => {
           headerShown: false,
           title: '',
           tabBarIcon: ({tabInfo, focused}) => (
-            <View style={styles.container}>
+            <View
+              style={[
+                styles.container,
+                {display: keyboardStatus ? 'none' : 'flex'},
+              ]}>
               <PlusIcon
                 width={30}
                 height={50}
@@ -56,6 +77,7 @@ const BootomTabNavigator = () => {
           ),
         }}
       />
+
       <Tab.Screen
         name="Profile"
         component={Profile}
@@ -79,7 +101,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
     borderRadius: 50,
-    bottom: 20,
+    bottom: 24,
     shadowColor: 'rgba(0, 0, 0, 1)',
     elevation: 7,
     width: 70,

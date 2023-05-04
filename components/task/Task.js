@@ -27,8 +27,9 @@ const Task = ({id, title, removeTodo, navigation, item}) => {
         borderWidth: 1,
         borderColor: '#55BCF6',
         borderRadius: 10,
-        padding: 10,
-        margin: 3,
+        padding: 7,
+        margin: 5,
+        paddingTop: 25,
       }}>
       <View>
         <RemoveTask
@@ -94,7 +95,7 @@ const Task = ({id, title, removeTodo, navigation, item}) => {
         <View>
           <Text
             style={{
-              marginTop: 19,
+              marginTop: 18,
               fontSize: 25,
               right: 12,
             }}
@@ -104,7 +105,7 @@ const Task = ({id, title, removeTodo, navigation, item}) => {
                 params: {item, id},
               })
             }>
-            <PencilIcon width={30} height={30} fill="#55BCF6" />
+            <PencilIcon width={25} height={30} fill="#55BCF6" />
           </Text>
         </View>
       </TouchableOpacity>
