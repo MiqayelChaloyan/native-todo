@@ -1,43 +1,76 @@
-import React from 'react';
-import {View, StyleSheet, Button, PermissionsAndroid} from 'react-native';
-import {RNCamera} from 'react-native-camera';
-import {useCamera} from 'react-native-camera-hooks';
+import React, {useContext, useEffect, useState} from 'react';
+import {
+  TextInput,
+  Image,
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Button,
+} from 'react-native';
+import {gStyle} from '../../../styles/styles';
+import {todoDataContext} from '../../Data/TodoData';
+import {launchImageLibrary} from 'react-native-image-picker';
+// import ImagePicker from 'react-native-image-picker';
+import {check, request, PERMISSIONS, RESULTS} from 'react-native-permissions';
 
 export default function Camera() {
-  const [{cameraRef}, {takePicture}] = useCamera(null);
+  const [downloadedImageUri, setDownloadedImageUri] = useState(null);
 
-  const requestCameraPermission = async () => {
+  useEffect(() => {
+    console.log(downloadedImageUri);
+  }, [downloadedImageUri]);
+
+  const checkPermission = async () => {
     try {
-      const granted = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.CAMERA,
-        {
-          title: 'Cool Photo App Camera Permission',
-          message:
-            'Cool Photo App needs access to your camera ' +
-            'so you can take awesome pictures.',
-          buttonNeutral: 'Ask Me Later',
-          buttonNegative: 'Cancel',
-          buttonPositive: 'OK',
-        },
-      );
-      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        console.log('You can use the camera');
-      } else {
-        console.log('Camera permission denied');
+      const result = await check(PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE);
+      if (result === RESULTS.GRANTED) {
+        chooseImage();
+      } else if (result === RESULTS.DENIED) {
+        requestPermission();
+      } else if (result === RESULTS.BLOCKED) {
+        Alert.alert(
+          'Permission blocked',
+          'Please go to settings and enable permission to access the photo library.',
+        );
       }
-    } catch (err) {
-      console.warn(err);
+    } catch (error) {
+      console.log(error);
     }
+  };
+
+  const requestPermission = async () => {
+    try {
+      const result = await request(PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE);
+      if (result === RESULTS.GRANTED) {
+        chooseImage();
+      } else if (result === RESULTS.DENIED) {
+        Alert.alert(
+          'Permission denied',
+          'We cannot access your photo library if you do not grant permission.',
+        );
+      } else if (result === RESULTS.BLOCKED) {
+        Alert.alert(
+          'Permission blocked',
+          'Please go to settings and enable permission to access the photo library.',
+        );
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const chooseImage = () => {
+    launchImageLibrary({}, response => {
+      if (response.uri) {
+        setDownloadedImageUri(response.uri);
+      }
+    });
   };
 
   return (
     <View style={styles.body}>
-      <RNCamera
-        ref={cameraRef}
-        type={RNCamera.Constants.Type.back}
-        style={styles.preview}>
-        <Button title="request permissions" onPress={requestCameraPermission} />
-      </RNCamera>
+      <Button title="request permissions" onPress={checkPermission} />
     </View>
   );
 }
