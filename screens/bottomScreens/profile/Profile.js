@@ -9,8 +9,10 @@ import {
   ScrollView,
   StatusBar,
 } from 'react-native';
-import ModalProfile from './modal/ModalProfile';
-
+// modals
+import ModalProfile from './modal/registration/ModalProfile';
+import ModalDropdown from './modal/dropdown/ModalDropdown';
+// icons
 import GroupIcon from './icons/Group.svg';
 import FriendIcon from './icons/Friend.svg';
 import SettingIcon from './icons/Setting.svg';
@@ -18,9 +20,9 @@ import ShareIcon from './icons/Share.svg';
 import AboutUsIcon from './icons/AboutUs.svg';
 import SupportIcon from './icons/Support.svg';
 import PhoneIcon from './icons/Phone.svg';
-
+// context
 import GlobalContext from '../../../context/GlobalContext';
-import ModalDropdown from './modal/ModalDropdown';
+// components
 import ShareScreen from './share/Share';
 
 const supportedURL = 'https://facebook.com';

@@ -2,14 +2,14 @@ import {useContext, useState} from 'react';
 import {View, Text, TouchableOpacity, TextInput, Image} from 'react-native';
 import Modal from 'react-native-modal';
 import {launchImageLibrary} from 'react-native-image-picker';
-import GlobalContext from '../../../../context/GlobalContext';
-
+import GlobalContext from '../../../../../context/GlobalContext';
 // form and validation
 import {Formik, useFormik} from 'formik';
-import validationSchema from './validate/schema';
+import validationSchema from './validation/schema';
 // icon
-import AddImageIcon from '../icons/AddImage.svg';
+import AddImageIcon from '../../icons/AddImage.svg';
 import styles from './style';
+import Camera from './camera/Camera';
 
 const ModalProfile = ({isVisible, closeRemoveModal}) => {
   const {createUser, setImageUrl, userImageUrl} = useContext(GlobalContext);
@@ -92,7 +92,7 @@ const ModalProfile = ({isVisible, closeRemoveModal}) => {
                 />
               ) : (
                 <Image
-                  source={require('../../../../assects/images/profile.jpg')}
+                  source={require('../../../../../assects/images/profile.jpg')}
                   style={{
                     width: 202,
                     height: 202,
@@ -104,9 +104,10 @@ const ModalProfile = ({isVisible, closeRemoveModal}) => {
                 />
               )}
               <View style={styles.icon}>
-                <Text style={styles.iconText} onPress={selectFile}>
+                <Camera />
+                {/* <Text style={styles.iconText} onPress={selectFile}>
                   <AddImageIcon width={50} height={50} />
-                </Text>
+                </Text> */}
               </View>
             </View>
             <View style={styles.formContainer}>

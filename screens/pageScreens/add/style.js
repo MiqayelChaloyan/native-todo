@@ -35,6 +35,12 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: '#55BCF6',
   },
+  addList: {
+    top: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   error: {
     color: 'red',
     textAlign: 'center',

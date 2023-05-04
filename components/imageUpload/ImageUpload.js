@@ -26,7 +26,7 @@ const ImageUpload = ({setImageValue}) => {
   const removeImage = () => setImageUrl(null);
 
   return (
-    <View style={{marginBottom: 40}}>
+    <View style={{marginBottom: 40, marginTop: 5}}>
       <View
         style={{
           flexDirection: 'row',

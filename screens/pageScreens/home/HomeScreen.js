@@ -1,7 +1,11 @@
 import {useContext, useEffect, useState} from 'react';
-import {View, Text, Button} from 'react-native';
+import {View, Text} from 'react-native';
+// components
 import List from '../../../components/list/List';
+// context
 import GlobalContext from '../../../context/GlobalContext';
+// styles
+import styles from './style';
 
 const HomeScreen = ({navigation}) => {
   const {todos} = useContext(GlobalContext);
@@ -14,16 +18,12 @@ const HomeScreen = ({navigation}) => {
 
   return (
     <>
-      <Text style={{textAlign: 'center', margin: 15, fontSize: 14}}>
-        Some of the tasks have been completed {complete.length}/{todos.length}
-      </Text>
-      <View
-        style={{
-          flex: 1,
-          alignItems: 'center',
-          justifyContent: 'center',
-          marginTop: 25,
-        }}>
+      {todos.length > 0 && (
+        <Text style={styles.completed}>
+          Some of the tasks have been completed {complete.length}/{todos.length}
+        </Text>
+      )}
+      <View style={styles.container}>
         <List navigation={navigation} />
       </View>
     </>

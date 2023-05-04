@@ -1,5 +1,7 @@
 import {Text} from 'react-native';
 import Share from 'react-native-share';
+// styles
+import styles from './style';
 
 const ShareScreen = () => {
   const share = async () => {
@@ -16,16 +18,9 @@ const ShareScreen = () => {
       err && console.log(err);
     }
   };
+
   return (
-    <Text
-      style={{
-        textAlign: 'left',
-        padding: 5,
-        fontSize: 17,
-        color: 'black',
-        left: 15,
-      }}
-      onPress={share}>
+    <Text style={styles.container} onPress={share}>
       Share
     </Text>
   );

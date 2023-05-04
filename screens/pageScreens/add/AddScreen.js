@@ -1,15 +1,17 @@
-import GlobalContext from '../../../context/GlobalContext';
-import React, {useContext, useEffect} from 'react';
-
-import {useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
+//components
 import MyInput from '../../../components/myInput/MyInput';
-import styles from './style';
 import ImageUpload from '../../../components/imageUpload/ImageUpload';
+// context
+import GlobalContext from '../../../context/GlobalContext';
+// styles
+import styles from './style';
 
-const AddScreen = ({navigation, route}) => {
+const AddScreen = ({navigation}) => {
   const {addTodo} = useContext(GlobalContext);
   const [image, setImageValue] = useState(null);
+  const [err, setErr] = useState(false);
   const [text, setNewText] = useState('');
 
   useEffect(() => {
@@ -17,19 +19,15 @@ const AddScreen = ({navigation, route}) => {
     setImageValue(null);
   }, [addTodo]);
 
+  useEffect(() => setErr(false), [text.length > 0]);
+
   const handleChange = newText => setNewText(newText);
 
   return (
     <View>
       <View style={styles.container}>
         <View style={styles.modal}>
-          <View
-            style={{
-              top: 1,
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
+          <View style={styles.addList}>
             {text.length > 0 && (
               <Text style={styles.title}>Want to add to your to-do list ?</Text>
             )}
@@ -39,6 +37,9 @@ const AddScreen = ({navigation, route}) => {
             <View style={[styles.elevation, styles.card]}>
               <View>
                 <MyInput handleChange={handleChange} item={text} />
+                <Text style={styles.error}>
+                  {err ? 'The field must not be empty' : null}
+                </Text>
               </View>
             </View>
             <View>
@@ -50,8 +51,14 @@ const AddScreen = ({navigation, route}) => {
               <Text
                 style={styles.text}
                 onPress={() => {
-                  addTodo(text, image);
-                  return navigation.navigate('Home');
+                  if (text.trim() !== '') {
+                    addTodo(text, image);
+                    return navigation.navigate('Home');
+                  } else {
+                    setErr(true);
+                  }
+                  // addTodo(text, image);
+                  // return navigation.navigate('Home');
                 }}>
                 Add
               </Text>

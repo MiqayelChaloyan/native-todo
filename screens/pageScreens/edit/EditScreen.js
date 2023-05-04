@@ -1,7 +1,10 @@
 import {useContext, useEffect, useState} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
-import GlobalContext from '../../../context/GlobalContext';
+// components
 import MyInput from '../../../components/myInput/MyInput';
+// context
+import GlobalContext from '../../../context/GlobalContext';
+// styles
 import styles from './style';
 
 function EditScreen({navigation, route}) {
