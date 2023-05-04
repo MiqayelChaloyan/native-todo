@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import {useContext, useState} from 'react';
 import {
   View,
   Text,
@@ -21,6 +21,7 @@ import PhoneIcon from './icons/Phone.svg';
 
 import GlobalContext from '../../../context/GlobalContext';
 import ModalDropdown from './modal/ModalDropdown';
+import ShareScreen from '../../drawerScreens/share/Share';
 
 const supportedURL = 'https://ru-ru.facebook.com';
 
@@ -28,7 +29,7 @@ const Profile = () => {
   const [isVisible, setisVisible] = useState(false);
   const [isVisibleDropdown, setisVisibleDropdown] = useState(false);
 
-  const { user, userImageUrl } = useContext(GlobalContext);
+  const {user, userImageUrl} = useContext(GlobalContext);
 
   const closeRemoveModal = (bool, type) => {
     if (type === 'Yes') {
@@ -38,11 +39,9 @@ const Profile = () => {
     }
   };
 
-
   const closeRemoveModalDropdown = (bool, type) => {
-    setisVisibleDropdown(bool)
-  }
-
+    setisVisibleDropdown(bool);
+  };
 
   const handlePress = () => {
     const supported = Linking.canOpenURL(supportedURL);
@@ -54,9 +53,8 @@ const Profile = () => {
     }
   };
 
-
   return (
-    <SafeAreaView style={{ flex: 1, paddingTop: StatusBar.currentHeight }}>
+    <SafeAreaView style={{flex: 1, paddingTop: StatusBar.currentHeight}}>
       <ScrollView
         style={{
           marginHorizontal: 20,
@@ -70,8 +68,8 @@ const Profile = () => {
           isVisible={isVisibleDropdown}
           closeRemoveModalDropdown={closeRemoveModalDropdown}
         />
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <View style={{ top: 15 }}>
+        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+          <View style={{top: 15}}>
             <View
               style={{
                 left: 80,
@@ -84,7 +82,7 @@ const Profile = () => {
               }}>
               {userImageUrl ? (
                 <Image
-                  source={{ uri: userImageUrl }}
+                  source={{uri: userImageUrl}}
                   style={{
                     width: 202,
                     height: 202,
@@ -102,7 +100,7 @@ const Profile = () => {
                 />
               )}
             </View>
-            {user &&
+            {user && (
               <>
                 <Text
                   style={{
@@ -114,10 +112,12 @@ const Profile = () => {
                   }}>
                   {user.name && user.name}
                 </Text>
-                <Text style={{ textAlign: 'center', marginBottom: 20 }}>
+                <Text style={{textAlign: 'center', marginBottom: 20}}>
                   {user.userName}
                 </Text>
-                <Text style={{ textAlign: 'center' }}>{user.country && user.country}</Text>
+                <Text style={{textAlign: 'center'}}>
+                  {user.country && user.country}
+                </Text>
                 <TouchableOpacity
                   style={{
                     flexDirection: 'row',
@@ -127,8 +127,8 @@ const Profile = () => {
                   onPress={() => {
                     Linking.openURL(`tel:${user.phoneNumber}`);
                   }}>
-                  {
-                    user.phoneNumber && (<Text
+                  {user.phoneNumber && (
+                    <Text
                       style={{
                         textAlign: 'center',
                         padding: 7,
@@ -136,8 +136,8 @@ const Profile = () => {
                         color: 'black',
                       }}>
                       <PhoneIcon width={20} height={20} fill="black" />
-                    </Text>)
-                  }
+                    </Text>
+                  )}
                   <Text
                     style={{
                       textAlign: 'center',
@@ -149,7 +149,8 @@ const Profile = () => {
                     {user.phoneNumber && user.phoneNumber}
                   </Text>
                 </TouchableOpacity>
-              </>}
+              </>
+            )}
             <TouchableOpacity
               onPress={() => setisVisible(true)}
               style={{
@@ -170,7 +171,7 @@ const Profile = () => {
               </Text>
             </TouchableOpacity>
             <View>
-              <View style={{ flexDirection: 'row' }}>
+              <View style={{flexDirection: 'row'}}>
                 <View
                   style={{
                     flexDirection: 'row',
@@ -192,8 +193,7 @@ const Profile = () => {
                       height: 40,
                       borderRadius: 8,
                     }}
-                    onPress={() => setisVisibleDropdown(true)}
-                  >
+                    onPress={() => setisVisibleDropdown(true)}>
                     <Text
                       style={{
                         textAlign: 'left',
@@ -207,7 +207,7 @@ const Profile = () => {
                   </TouchableOpacity>
                 </View>
               </View>
-              <View style={{ flexDirection: 'row' }}>
+              <View style={{flexDirection: 'row'}}>
                 <View
                   style={{
                     flexDirection: 'row',
@@ -243,7 +243,7 @@ const Profile = () => {
                   </TouchableOpacity>
                 </View>
               </View>
-              <View style={{ flexDirection: 'row' }}>
+              <View style={{flexDirection: 'row'}}>
                 <View
                   style={{
                     flexDirection: 'row',
@@ -278,7 +278,7 @@ const Profile = () => {
                   </TouchableOpacity>
                 </View>
               </View>
-              <View style={{ flexDirection: 'row' }}>
+              <View style={{flexDirection: 'row'}}>
                 <View
                   style={{
                     flexDirection: 'row',
@@ -314,7 +314,7 @@ const Profile = () => {
                   </TouchableOpacity>
                 </View>
               </View>
-              <View style={{ flexDirection: 'row' }}>
+              <View style={{flexDirection: 'row'}}>
                 <View
                   style={{
                     flexDirection: 'row',
@@ -344,12 +344,12 @@ const Profile = () => {
                         color: 'black',
                         left: 15,
                       }}>
-                      Share
+                      <ShareScreen />
                     </Text>
                   </TouchableOpacity>
                 </View>
               </View>
-              <View style={{ flexDirection: 'row' }}>
+              <View style={{flexDirection: 'row'}}>
                 <View
                   style={{
                     flexDirection: 'row',
