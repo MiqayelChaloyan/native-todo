@@ -45,18 +45,18 @@ const ModalProfile = ({isVisible, closeRemoveModal}) => {
     }
   };
 
-  const selectFile = () => {
-    const options = {
-      saveToPhotos: true,
-      mediaType: 'photo',
-      includeBase64: false,
-    };
+  // const selectFile = () => {
+  //   const options = {
+  //     saveToPhotos: true,
+  //     mediaType: 'photo',
+  //     includeBase64: false,
+  //   };
 
-    launchImageLibrary(options, res => {
-      const url = res?.assets && res.assets[0].uri;
-      setImageUrl(url);
-    });
-  };
+  //   launchImageLibrary(options, res => {
+  //     const url = res?.assets && res.assets[0].uri;
+  //     setImageUrl(url);
+  //   });
+  // };
 
   return (
     <Modal

@@ -1,79 +1,58 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {
-  TextInput,
-  Image,
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  Button,
-} from 'react-native';
-import {gStyle} from '../../../styles/styles';
-import {todoDataContext} from '../../Data/TodoData';
+import React, {useContext} from 'react';
+import {View, Text, StyleSheet, PermissionsAndroid} from 'react-native';
 import {launchImageLibrary} from 'react-native-image-picker';
-// import ImagePicker from 'react-native-image-picker';
-import {check, request, PERMISSIONS, RESULTS} from 'react-native-permissions';
+import GlobalContext from '../../../../../../context/GlobalContext';
+import AddImageIcon from '../../../icons/AddImage.svg';
 
-export default function Camera() {
-  const [downloadedImageUri, setDownloadedImageUri] = useState(null);
+const Camera = () => {
+  const {setImageUrl, userImageUrl} = useContext(GlobalContext);
 
-  useEffect(() => {
-    console.log(downloadedImageUri);
-  }, [downloadedImageUri]);
-
-  const checkPermission = async () => {
+  const requestCameraPermission = async () => {
     try {
-      const result = await check(PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE);
-      if (result === RESULTS.GRANTED) {
-        chooseImage();
-      } else if (result === RESULTS.DENIED) {
-        requestPermission();
-      } else if (result === RESULTS.BLOCKED) {
-        Alert.alert(
-          'Permission blocked',
-          'Please go to settings and enable permission to access the photo library.',
-        );
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.CAMERA,
+        {
+          title: 'Cool Photo App Camera Permission',
+          message:
+            'Cool Photo App needs access to your camera ' +
+            'so you can take awesome pictures.',
+          buttonNeutral: 'Ask Me Later',
+          buttonNegative: 'Cancel',
+          buttonPositive: 'OK',
+        },
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        selectFile();
+        console.log('You can use the camera');
+      } else {
+        console.log('Camera permission denied');
       }
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      console.warn(err);
     }
   };
 
-  const requestPermission = async () => {
-    try {
-      const result = await request(PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE);
-      if (result === RESULTS.GRANTED) {
-        chooseImage();
-      } else if (result === RESULTS.DENIED) {
-        Alert.alert(
-          'Permission denied',
-          'We cannot access your photo library if you do not grant permission.',
-        );
-      } else if (result === RESULTS.BLOCKED) {
-        Alert.alert(
-          'Permission blocked',
-          'Please go to settings and enable permission to access the photo library.',
-        );
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const selectFile = () => {
+    const options = {
+      saveToPhotos: true,
+      mediaType: 'photo',
+      includeBase64: false,
+    };
 
-  const chooseImage = () => {
-    launchImageLibrary({}, response => {
-      if (response.uri) {
-        setDownloadedImageUri(response.uri);
-      }
+    launchImageLibrary(options, res => {
+      const url = res?.assets && res.assets[0].uri;
+      setImageUrl(url);
     });
   };
 
   return (
     <View style={styles.body}>
-      <Button title="request permissions" onPress={checkPermission} />
+      <Text onPress={requestCameraPermission}>
+        <AddImageIcon width={50} height={50} />
+      </Text>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   body: {
@@ -85,3 +64,5 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
 });
+
+export default Camera;
