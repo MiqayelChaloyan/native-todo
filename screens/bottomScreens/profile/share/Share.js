@@ -5,18 +5,38 @@ import styles from './style';
 
 const ShareScreen = () => {
   const share = async () => {
-    const options = {
+    const shareOptions = {
       message: 'This is an example of spreading anything.',
       url: 'https://facebook.com/',
       email: 'miqochaloyan@gmail.com',
+      social: Share.Social.EMAIL,
       subject: 'This is an example share.',
+      backgroundBottomColor: '#fefefe',
+      backgroundTopColor: '#906df4',
     };
-    try {
-      const result = await Share.open(options);
-      console.log(result);
-    } catch (err) {
-      err && console.log(err);
-    }
+
+    await Share.shareSingle(shareOptions)
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => {
+        err && console.log(err);
+      });
+
+    // const options = {
+    //   message: 'This is an example of spreading anything.',
+    //   url: 'https://facebook.com/',
+    //   email: 'miqochaloyan@gmail.com',
+    //   subject: 'This is an example share.',
+    // };
+
+    // Share.open(options)
+    //   .then(res => {
+    //     console.log(res);
+    //   })
+    //   .catch(err => {
+    //     err && console.log(err);
+    //   });
   };
 
   return (

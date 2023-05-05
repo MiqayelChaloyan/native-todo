@@ -6,8 +6,6 @@ import GlobalContext from '../../../../../context/GlobalContext';
 // form and validation
 import {Formik, useFormik} from 'formik';
 import validationSchema from './validation/schema';
-// icon
-import AddImageIcon from '../../icons/AddImage.svg';
 import styles from './style';
 import Camera from './camera/Camera';
 
@@ -40,23 +38,10 @@ const ModalProfile = ({isVisible, closeRemoveModal}) => {
 
   const handleSave = () => {
     if (state) {
-      createUser(state);
+      createUser(state, userImageUrl);
       closeModal(false, 'Cancel');
     }
   };
-
-  // const selectFile = () => {
-  //   const options = {
-  //     saveToPhotos: true,
-  //     mediaType: 'photo',
-  //     includeBase64: false,
-  //   };
-
-  //   launchImageLibrary(options, res => {
-  //     const url = res?.assets && res.assets[0].uri;
-  //     setImageUrl(url);
-  //   });
-  // };
 
   return (
     <Modal
@@ -105,9 +90,6 @@ const ModalProfile = ({isVisible, closeRemoveModal}) => {
               )}
               <View style={styles.icon}>
                 <Camera />
-                {/* <Text style={styles.iconText} onPress={selectFile}>
-                  <AddImageIcon width={50} height={50} />
-                </Text> */}
               </View>
             </View>
             <View style={styles.formContainer}>

@@ -5,7 +5,7 @@ import GlobalContext from '../../../../../../context/GlobalContext';
 import AddImageIcon from '../../../icons/AddImage.svg';
 
 const Camera = () => {
-  const {setImageUrl, userImageUrl} = useContext(GlobalContext);
+  const {setImageUrl} = useContext(GlobalContext);
 
   const requestCameraPermission = async () => {
     try {

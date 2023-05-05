@@ -6,6 +6,9 @@ import HomeScreen from '../screens/pageScreens/home/HomeScreen';
 import RemoveTask from '../screens/drawerScreens/removeTaskHelp/RemoveTask';
 import AddTask from '../screens/drawerScreens/addTaskHelp/AddTask';
 import EditTask from '../screens/drawerScreens/editTaskHelp/EditTask';
+import VideoPlayeer from '../screens/drawerScreens/videoPlayer/VideoPlayer';
+import ReanimatedCarousel from '../screens/drawerScreens/carousel/Carousel';
+import TopTabs from './TopTabNavigator';
 
 const Drawer = createDrawerNavigator();
 
@@ -16,6 +19,9 @@ const DrawerNavigator = () => {
       <Drawer.Screen name="Remove" component={RemoveTask} />
       <Drawer.Screen name="Add" component={AddTask} />
       <Drawer.Screen name="Edit" component={EditTask} />
+      <Drawer.Screen name="Video" component={VideoPlayeer} />
+      <Drawer.Screen name="Carousel" component={ReanimatedCarousel} />
+      <Drawer.Screen name="Tabs" component={TopTabs} />
     </Drawer.Navigator>
   );
 };

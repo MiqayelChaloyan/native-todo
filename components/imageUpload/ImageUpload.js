@@ -33,7 +33,7 @@ const ImageUpload = ({setImageValue}) => {
           justifyContent: 'space-around',
           alignItems: 'center',
         }}>
-        <View>
+        <View style={{margin: 25}}>
           <Text>Add a picture</Text>
         </View>
         <View>
@@ -44,17 +44,17 @@ const ImageUpload = ({setImageValue}) => {
           </TouchableOpacity>
         </View>
       </View>
-      <View style={{marginTop: 110}}>
-        {imageUrl && (
+      {imageUrl && (
+        <View style={{marginTop: 110}}>
           <Text style={styles.removeImage} onPress={removeImage}>
             <RemoveIcon width={30} height={30} fill="#55BCF6" zIndex={1} />
           </Text>
-        )}
-        <Image
-          source={{uri: imageUrl}}
-          style={{width: 280, height: 300, borderRadius: 7}}
-        />
-      </View>
+          <Image
+            source={{uri: imageUrl}}
+            style={{width: 280, height: 300, borderRadius: 7}}
+          />
+        </View>
+      )}
     </View>
   );
 };

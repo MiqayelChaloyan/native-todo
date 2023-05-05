@@ -31,7 +31,7 @@ const Profile = () => {
   const [isVisible, setisVisible] = useState(false);
   const [isVisibleDropdown, setisVisibleDropdown] = useState(false);
 
-  const {user, userImageUrl} = useContext(GlobalContext);
+  const {user} = useContext(GlobalContext);
 
   const closeRemoveModal = (bool, type) => {
     if (type === 'Yes') {
@@ -41,7 +41,7 @@ const Profile = () => {
     }
   };
 
-  const closeRemoveModalDropdown = (bool, type) => {
+  const closeRemoveModalDropdown = bool => {
     setisVisibleDropdown(bool);
   };
 
@@ -82,9 +82,9 @@ const Profile = () => {
                 marginBottom: user ? 10 : 100,
                 bottom: 5,
               }}>
-              {userImageUrl ? (
+              {user ? (
                 <Image
-                  source={{uri: userImageUrl}}
+                  source={{uri: user.image}}
                   style={{
                     width: 202,
                     height: 202,
